@@ -1,40 +1,47 @@
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
+import routes from './routes';
+
 import Container from './components/Container';
-import ContactForm from './components/ContactForm';
-import ContactList from './components/ContactList';
-import Filter from './components/Filter';
-import Spinner from './components/Loader';
-import { connect } from 'react-redux';
-import { useEffect } from 'react';
-import { contactsOperations, contactsSelectors } from './redux/contacts';
+import AppBar from './components/AppBar';
+import Loader from './components/Loader';
 
-const App = ({ isLoading, isError, fetchContacts }) => {
-  // eslint-disable-next-line
-  useEffect(() => fetchContacts(), []);
+// import ContactForm from './components/ContactForm';
+// import ContactList from './components/ContactList';
+// import Filter from './components/Filter';
+// import { connect } from 'react-redux';
+// import { useEffect } from 'react';
+// import { contactsOperations, contactsSelectors } from './redux/contacts';
 
+const HomePage = lazy(() =>
+  import('./views/HomePage' /* webpackChunkName: "home-page" */),
+);
+const ContactsPage = lazy(() =>
+  import('./views/ContactsPage' /* webpackChunkName: "movies-page" */),
+);
+
+const App = () => {
   return (
     <Container>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <h2>Contacts</h2>
-      <Filter />
-      {isLoading ? (
-        <Spinner />
-      ) : isError ? (
-        <p>Oops, we have some loading error! :(</p>
-      ) : (
-        <ContactList />
-      )}
+      <AppBar />
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          <Route exact path={routes.home} component={HomePage} />
+          <Route exact path={routes.contacts} component={ContactsPage} />
+          <Redirect to={routes.home} />
+        </Switch>
+      </Suspense>
     </Container>
   );
 };
 
-const mapStateToProps = state => ({
-  isLoading: contactsSelectors.getLoading(state),
-  isError: contactsSelectors.getError(state),
-});
+// const mapStateToProps = state => ({
+//   isLoading: contactsSelectors.getLoading(state),
+//   isError: contactsSelectors.getError(state),
+// });
 
-const mapDispatchToProps = dispatch => ({
-  fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-});
+// const mapDispatchToProps = dispatch => ({
+//   fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

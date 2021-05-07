@@ -18,3 +18,18 @@ img {
 a {
   text-decoration: none;
 }
+
+.Navlink {
+  padding: 10px;
+  border-radius: 10px;
+  color: black;
+}
+
+.Navlink:not(:last-child) {
+  margin-right: 15px;
+}
+
+.Navlink--active {
+  background-color: orange;
+  color: #fff;
+}

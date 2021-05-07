@@ -24,11 +24,19 @@ const register = credentials => async dispatch => {
     const { data } = await axios.post('/users/signup', credentials);
     dispatch(registerSuccess(data));
   } catch (error) {
-    dispatch(registerError(error));
+    dispatch(registerError(error.message));
   }
 };
 
-const login = credentials => dispatch => {};
+const login = credentials => async dispatch => {
+  dispatch(loginRequest());
+  try {
+    const { data } = await axios.post('/users/login', credentials);
+    dispatch(loginSuccess(data));
+  } catch (error) {
+    dispatch(loginError(error.message));
+  }
+};
 
 const logout = () => dispatch => {};
 

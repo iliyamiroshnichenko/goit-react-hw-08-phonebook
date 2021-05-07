@@ -20,7 +20,7 @@ const LoginPage = () => {
   return (
     <div>
       <h1>Hello, this is a Login Page!</h1>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} autoComplete="off">
         <label>
           Email
           <input

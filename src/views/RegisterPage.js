@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { authOperations } from '../redux/auth';
 
 const initialState = {
   name: '',
@@ -6,7 +8,7 @@ const initialState = {
   password: '',
 };
 
-const RegisterPage = () => {
+const RegisterPage = ({ onRegister }) => {
   const [state, setState] = useState(initialState);
   const { name, email, password } = state;
 
@@ -16,12 +18,13 @@ const RegisterPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    onRegister(state);
     setState(initialState);
   };
   return (
     <div>
       <h1>Hello, this is a Register Page!</h1>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} autoComplete="off">
         <label>
           Name
           <input
@@ -61,4 +64,8 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+const mapDispatchToProps = {
+  onRegister: authOperations.register,
+};
+
+export default connect(null, mapDispatchToProps)(RegisterPage);

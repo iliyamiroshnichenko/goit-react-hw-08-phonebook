@@ -6,18 +6,18 @@ import Container from './components/Container';
 import AppBar from './components/AppBar';
 import Loader from './components/Loader';
 
-// import ContactForm from './components/ContactForm';
-// import ContactList from './components/ContactList';
-// import Filter from './components/Filter';
-// import { connect } from 'react-redux';
-// import { useEffect } from 'react';
-// import { contactsOperations, contactsSelectors } from './redux/contacts';
-
 const HomePage = lazy(() =>
   import('./views/HomePage' /* webpackChunkName: "home-page" */),
 );
+
+const RegisterPage = lazy(() =>
+  import('./views/RegisterPage' /* webpackChunkName: "register-page" */),
+);
+const LoginPage = lazy(() =>
+  import('./views/LoginPage' /* webpackChunkName: "login-page" */),
+);
 const ContactsPage = lazy(() =>
-  import('./views/ContactsPage' /* webpackChunkName: "movies-page" */),
+  import('./views/ContactsPage' /* webpackChunkName: "contacts-page" */),
 );
 
 const App = () => {
@@ -27,6 +27,8 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <Switch>
           <Route exact path={routes.home} component={HomePage} />
+          <Route path={routes.register} component={RegisterPage} />
+          <Route path={routes.login} component={LoginPage} />
           <Route exact path={routes.contacts} component={ContactsPage} />
           <Redirect to={routes.home} />
         </Switch>
@@ -34,14 +36,5 @@ const App = () => {
     </Container>
   );
 };
-
-// const mapStateToProps = state => ({
-//   isLoading: contactsSelectors.getLoading(state),
-//   isError: contactsSelectors.getError(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-// });
 
 export default App;

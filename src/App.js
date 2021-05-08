@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import routes from './routes';
@@ -5,6 +6,9 @@ import routes from './routes';
 import Container from './components/Container';
 import AppBar from './components/AppBar';
 import Loader from './components/Loader';
+
+import { authOperations } from './redux/auth';
+import { connect } from 'react-redux';
 
 const HomePage = lazy(() =>
   import('./views/HomePage' /* webpackChunkName: "home-page" */),
@@ -20,7 +24,11 @@ const ContactsPage = lazy(() =>
   import('./views/ContactsPage' /* webpackChunkName: "contacts-page" */),
 );
 
-const App = () => {
+const App = ({ onGetCurrentUser }) => {
+  useEffect(() => {
+    onGetCurrentUser();
+  }, []);
+
   return (
     <Container>
       <AppBar />
@@ -37,4 +45,8 @@ const App = () => {
   );
 };
 
-export default App;
+const mapDispatchToProps = {
+  onGetCurrentUser: authOperations.getCurrentUser,
+};
+
+export default connect(null, mapDispatchToProps)(App);

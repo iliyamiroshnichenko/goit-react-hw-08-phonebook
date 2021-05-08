@@ -1,5 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import {
+  persistStore,
+  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -7,6 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { contacts } from './contacts';
 import { auth } from './auth';
 
@@ -18,13 +21,19 @@ const middleware = [
   }),
 ];
 
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
+
 const store = configureStore({
-  reducer: { auth, contacts },
+  reducer: { auth: persistReducer(authPersistConfig, auth), contacts },
   middleware,
   devTools: process.env.NODE_ENV === 'development',
 });
 
-// const persistor = persistStore(store);
+const persistor = persistStore(store);
 
 // eslint-disable-next-line
-export default store;
+export default { store, persistor };

@@ -18,10 +18,20 @@ const {
   getCurrentUserError,
 } = authActions;
 
+const token = {
+  set(token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  },
+  unset() {
+    axios.defaults.headers.common.Authorization = ``;
+  },
+};
+
 const register = credentials => async dispatch => {
   dispatch(registerRequest());
   try {
     const { data } = await axios.post('/users/signup', credentials);
+    token.set(data.token);
     dispatch(registerSuccess(data));
   } catch (error) {
     dispatch(registerError(error.message));
@@ -32,13 +42,23 @@ const login = credentials => async dispatch => {
   dispatch(loginRequest());
   try {
     const { data } = await axios.post('/users/login', credentials);
+    token.set(data.token);
     dispatch(loginSuccess(data));
   } catch (error) {
     dispatch(loginError(error.message));
   }
 };
 
-const logout = () => dispatch => {};
+const logout = () => async dispatch => {
+  dispatch(logoutRequest());
+  try {
+    await axios.post('/users/logout');
+    token.unset();
+    dispatch(logoutSuccess());
+  } catch (error) {
+    dispatch(logoutError(error.message));
+  }
+};
 
 const getCurrentUser = () => (dispatch, getState) => {};
 

@@ -23,7 +23,7 @@ const RegisterPage = ({ onRegister }) => {
   };
   return (
     <div>
-      <h1>Hello, this is a Register Page!</h1>
+      <h1>Please, register to create a new account!</h1>
       <form className="form" onSubmit={handleSubmit} autoComplete="off">
         <label>
           Name

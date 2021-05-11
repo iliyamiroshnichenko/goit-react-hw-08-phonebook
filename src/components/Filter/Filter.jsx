@@ -13,6 +13,7 @@ const Filter = ({ value, onChange }) => {
           type="text"
           value={value}
           onChange={onChange}
+          placeholder="Find..."
         />
       </label>
     </>

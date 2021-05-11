@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 import { contactsOperations } from '../../redux/contacts';
 import PropTypes from 'prop-types';
-import styles from './ContactForm.module.css';
 
 const initialState = {
   name: '',

@@ -23,7 +23,7 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div>
-      <h1>Hello, this is a Login Page!</h1>
+      <h1>Please, log in if you already have an account!</h1>
       <form className="form" onSubmit={handleSubmit} autoComplete="off">
         <label>
           Email

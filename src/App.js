@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
 import routes from './routes';
 import Container from './components/Container';
 import AppBar from './components/AppBar';

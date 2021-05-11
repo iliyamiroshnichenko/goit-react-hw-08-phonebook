@@ -3,16 +3,12 @@ import { createReducer } from '@reduxjs/toolkit';
 import authActions from './auth-actions';
 
 const {
-  registerRequest,
   registerSuccess,
   registerError,
-  loginRequest,
   loginSuccess,
   loginError,
-  logoutRequest,
   logoutSuccess,
   logoutError,
-  getCurrentUserRequest,
   getCurrentUserSuccess,
   getCurrentUserError,
 } = authActions;
